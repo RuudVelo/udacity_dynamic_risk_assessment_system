@@ -37,11 +37,11 @@ def score_model():
     # evaluate model on test set
     f1_score = metrics.f1_score(y_test, y_pred)
 
-        # Write data with timestamp
+    # Write data with timestamp
     with open(os.path.join(model_path, 'latestscore.txt'), "w") as file: 
-        file.write(
-            f"Date of latest scoring: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n")
         file.write(f"f1 score = {f1_score}")
+
+    return f1_score
 
 if __name__ == '__main__':
     score_model()

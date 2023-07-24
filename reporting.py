@@ -1,8 +1,6 @@
 import pickle
-from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
-from sklearn import metrics
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -36,9 +34,10 @@ def score_model():
     #write the confusion matrix to the workspace
     filepath = os.path.join(test_data_path, "testdata.csv")
     df = pd.read_csv(filepath)
+    X_test = df[['lastmonth_activity', 'lastyear_activity', 'number_of_employees']]
     y_test = df[['exited']]
 
-    y_pred = model_predictions()
+    y_pred = model_predictions(X_test)
 
     return plot_confusion_matrix(y_test, y_pred, dataset_csv_path)
 

@@ -1,2 +1,0 @@
-Date of latest scoring: 22/07/2023 15:44:34
-f1 score = 0.5714285714285715

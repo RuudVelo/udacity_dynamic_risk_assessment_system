@@ -16,16 +16,14 @@ test_data_path = os.path.join(config['test_data_path'])
 prod_deployment_path = os.path.join(config['prod_deployment_path'])
 
 ##################Function to get model predictions
-def model_predictions():
+def model_predictions(data):
     #read the deployed model and a test dataset, calculate predictions
     model = pickle.load(open(os.path.join(prod_deployment_path,'trainedmodel.pkl'),'rb'))
 
-    filepath = os.path.join(test_data_path, "testdata.csv")
-    df = pd.read_csv(filepath)
-    X_test = df[['lastmonth_activity', 'lastyear_activity', 'number_of_employees']]
+    # Keep relevant columns
+    data = data[['lastmonth_activity', 'lastyear_activity', 'number_of_employees']]
 
-    # Make prediction
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(data)
 
     return y_pred #return value should be a list containing all predictions
 
@@ -94,7 +92,9 @@ def outdated_packages_list():
     return df
 
 if __name__ == '__main__':
-    model_predictions()
+    test_df = pd.read_csv(os.path.join(test_data_path, 'testdata.csv'))
+    data = test_df[['lastmonth_activity', 'lastyear_activity', 'number_of_employees']]
+    model_predictions(data)
     dataframe_summary()
     perc_missing_values()
     execution_time()
