@@ -9,6 +9,8 @@ import deployment
 import diagnostics
 import reporting
 import json
+import pandas as pd
+import numpy as np
 from sklearn import metrics
 
 ##################Load config.json and get environment variables
@@ -52,15 +54,18 @@ with open(os.path.join(prod_deployment_path, "latestscore.txt")) as file:
     latest_score = [line.split('=')[-1].strip() for line in file]
 
 data_path = os.path.join(output_folder_path,'finaldata.csv')
-df = ingestion.read_csv(data_path)
+df = pd.read_csv(data_path)
 y_pred = diagnostics.model_predictions(df)
 y = df['exited']
 f1_score_new = metrics.f1_score(y, y_pred)
 
+print("Old f1 score based on old model and old data:" , float(latest_score[0]))
+print("New f1 score based on old model and new data:", f1_score_new)
+
 ##################Deciding whether to proceed, part 2
 #if you found model drift, you should proceed. otherwise, do end the process here
 model_drift = False
-model_drift = True if f1_score_new < latest_score else False
+model_drift = True if f1_score_new < float(latest_score[0]) else False
 
 if not model_drift:
     print("No model drift. The process is stopped")
@@ -70,7 +75,6 @@ else:
 
 ##################Re-deployment
 #if you found evidence for model drift, re-run the deployment.py script
-subprocess.call(['python', 'training.py'])
 subprocess.call(['python', 'deployment.py'])
 
 
@@ -78,9 +82,3 @@ subprocess.call(['python', 'deployment.py'])
 #run diagnostics.py and reporting.py for the re-deployed model
 subprocess.call(['python', 'reporting.py'])
 subprocess.call(['python', 'apicalls.py'])
-
-
-
-
-
-
