@@ -1,0 +1,1 @@
+*/10 * * * * (cd /Users/ruudgoorden/Desktop/personal/ML Devops Engineer Udacity/ML-Devops-Engineer-Udacity-project-4/udacity_dynamic_risk_assessment_system && python fullprocess.py)
