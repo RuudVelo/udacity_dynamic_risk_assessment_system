@@ -24,7 +24,7 @@ def plot_confusion_matrix(y_test, y_pred, dataset_csv_path):
     plt.xlabel("Predicted Labels")
     plt.ylabel("True Labels")
     plt.title("Confusion Matrix")
-    plt.savefig(os.path.join(dataset_csv_path, "confusion_matrix.png"), bbox_inches="tight")
+    plt.savefig(os.path.join(dataset_csv_path, "confusion_matrix2.png"), bbox_inches="tight")
     plt.close()
 
 

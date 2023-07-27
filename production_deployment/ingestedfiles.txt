@@ -1,3 +1,2 @@
-Date of ingestion: 22/07/2023 11:09:44
 practicedata/dataset1.csv
 practicedata/dataset2.csv

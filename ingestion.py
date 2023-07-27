@@ -36,8 +36,6 @@ def merge_multiple_dataframe():
 
     # Write data with timestamp
     with open(os.path.join(output_folder_path, 'ingestedfiles.txt'), "w") as file: 
-        file.write(
-            f"Date of ingestion: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n")
         file.write("\n".join(files))
 
 if __name__ == '__main__':

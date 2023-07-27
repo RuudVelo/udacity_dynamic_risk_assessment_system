@@ -20,15 +20,14 @@ response3 = requests.get(f'{URL}/summarystats').text
 response4 = requests.get(f'{URL}/diagnostics').text
 
 #combine all API responses
-combined_response = {
-    "predictions": json.loads(response1),
-    **json.loads(response2),
-    "summary_statistics": json.loads(response3),
-    "diagnostics": json.loads(response4)
-}
-
 # Write the combined response to a .txt file
-filepath = os.path.join(model_path,'apireturns.txt')
-with open(filepath,'w') as f:
-    f.write(json.dumps(combined_response))
-
+filepath = os.path.join(model_path,'apireturns2.txt')
+with open(filepath,'w') as f:    
+    f.write('Model predictions\n')
+    f.write(response1)
+    f.write('\nModel pcore\n')
+    f.write(response2)
+    f.write('\nData Statistics\n')
+    f.write(response3)
+    f.write('\nModel diagnostics\n')
+    f.write(response4)

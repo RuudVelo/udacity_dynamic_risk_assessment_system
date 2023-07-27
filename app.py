@@ -34,20 +34,20 @@ def predict():
     if request.method == 'GET':
         file = request.args.get('filename')
         dataset = pd.read_csv(file)
-        return jsonify(diagnostics.model_predictions(dataset).tolist())
+        return jsonify(diagnostics.model_predictions(dataset).tolist()), 200
 
 #######################Scoring Endpoint
 @app.route("/scoring", methods=['GET','OPTIONS'])
 def score():        
     #check the score of the deployed model
-    return {'f1 score': scoring.score_model()} #add return value (a single F1 score number)
+    return {'f1 score': scoring.score_model()}, 200 #add return value (a single F1 score number)
 
 #######################Summary Statistics Endpoint
 @app.route("/summarystats", methods=['GET','OPTIONS'])
 def stats_summary():        
     #check means, medians, and modes for each column
     df_statistics = diagnostics.dataframe_summary()
-    return jsonify(df_statistics) #return a list of all calculated summary statistics
+    return jsonify(df_statistics), 200 #return a list of all calculated summary statistics
 
 #######################Diagnostics Endpoint
 @app.route("/diagnostics", methods=['GET','OPTIONS'])
@@ -65,7 +65,7 @@ def stats_diagnostics():
                                     'number_of_employees',
                                     'exited'], missing_data)},
             'dependency check':[dependency_check]
-            } #add return value for all diagnostics
+            }, 200 #add return value for all diagnostics
 
 
 if __name__ == "__main__":
