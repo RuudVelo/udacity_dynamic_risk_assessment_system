@@ -5,20 +5,20 @@ import json
 from datetime import datetime
 
 
-
-
 #############Load config.json and get input and output paths
-with open('config.json','r') as f:
-    config = json.load(f) 
+with open("config.json", "r") as f:
+    config = json.load(f)
 
-input_folder_path = config['input_folder_path']
-output_folder_path = config['output_folder_path']
-
+input_folder_path = config["input_folder_path"]
+output_folder_path = config["output_folder_path"]
 
 
 #############Function for data ingestion
-def merge_multiple_dataframe():
-    #check for datasets, compile them together, and write to an output file
+def merge_multiple_dataframe() -> None:
+    """
+    Merge multiple datasets from a specified folder and write the compiled data to an output file.
+    """
+    # check for datasets, compile them together, and write to an output file
     df = pd.DataFrame()
     files = []
 
@@ -30,13 +30,14 @@ def merge_multiple_dataframe():
         files.append(file_path)
 
     df.drop_duplicates(inplace=True)
-    
+
     # Write data to csv
-    df.to_csv(os.path.join(output_folder_path, 'finaldata.csv'), index=False)
+    df.to_csv(os.path.join(output_folder_path, "finaldata.csv"), index=False)
 
     # Write data with timestamp
-    with open(os.path.join(output_folder_path, 'ingestedfiles.txt'), "w") as file: 
+    with open(os.path.join(output_folder_path, "ingestedfiles.txt"), "w") as file:
         file.write("\n".join(files))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     merge_multiple_dataframe()
